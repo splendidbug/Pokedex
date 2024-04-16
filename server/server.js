@@ -2,16 +2,15 @@ const express = require("express");
 const app = express();
 const axios = require("axios");
 const https = require("https");
+const cors = require("cors");
+const path = require("path");
+app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 app.get("/api", (req, res) => {
   res.json({ users: ["userOne", "userTwo", "userThree", "userFour"] });
 });
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-// });
 
 app.get("/api/getpokemons", (request, response) => {
   const url = "https://pokeapi.co/api/v2/pokemon?limit=3000";
@@ -30,6 +29,10 @@ app.get("/api/details", (request, response) => {
       //   console.log(res.data.height);
     })
     .catch((err) => console.log(err));
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.listen(PORT, () => {
