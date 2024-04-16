@@ -4,6 +4,10 @@ import HomePage from "../HomePage/Home";
 import Details from "../PokeDetails/Details";
 import BackButton from "../Common/BackButton";
 import SearchBar from "../Common/SearchBar";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "../LoginButton"; // Assuming you have this component
+import LogoutButton from "../LogoutButton"; // Assuming you have this component
+
 const App = () => {
   const [currentView, setCurrentView] = useState("home");
   const handlePokemonClick = (url) => {
@@ -28,24 +32,33 @@ const App = () => {
   }, []);
 
   const [filteredPokemons, setFilteredPokemons] = useState([]);
-
   const handleSearch = (searchText) => {
     const filtered = pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(searchText.toLowerCase()));
     setFilteredPokemons(filtered);
   };
 
+  const { isAuthenticated, isLoading } = useAuth0();
+
   return (
     <div className="App">
-      {currentView === "home" ? (
-        <div>
-          <SearchBar onSearch={handleSearch} />
-          <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />
-        </div>
+      {isAuthenticated ? (
+        <>
+          {currentView === "home" ? (
+            <div>
+              <SearchBar onSearch={handleSearch} />
+              <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />
+              <LogoutButton />
+            </div>
+          ) : (
+            <div>
+              <BackButton onBackButtonClick={handleBackButtonClick} />
+              <Details pokemonUrl={selectedUrl} />
+              <LogoutButton />
+            </div>
+          )}
+        </>
       ) : (
-        <div>
-          <BackButton onBackButtonClick={handleBackButtonClick} />
-          <Details pokemonUrl={selectedUrl} />
-        </div>
+        <LoginButton />
       )}
     </div>
   );
