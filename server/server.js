@@ -19,11 +19,10 @@ app.get("/api/getpokemons", (request, response) => {
 
 app.get("/api/details", (request, response) => {
   const url = `https://pokeapi.co/api/v2/pokemon/${request.query.id}/`;
-  console.log(url);
   axios
     .get(url)
     .then((res) => {
-      response.json({ stats: res.data.stats, height: res.data.height, moves: res.data.moves, types: res.data.types, weight: res.data.weight });
+      response.json({ stats: res.data.stats, height: res.data.height, moves: res.data.moves, types: res.data.types, weight: res.data.weight, name: res.data.name, img_front_default: res.data.sprites.other.dream_world.front_default, img_front_shiny: res.data.sprites.front_shiny });
       //   console.log(res.data.height);
     })
     .catch((err) => console.log(err));

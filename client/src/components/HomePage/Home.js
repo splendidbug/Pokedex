@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-const Home = ({ onPokemonClick }) => {
-  // Conventionally, component names should start with a capital letter
-  const [pokemon, setPokemon] = useState([]); // Initialize as an empty array
-
-  useEffect(() => {
-    fetch("/api/getpokemons")
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemon(data.pokemons); // Assuming the API returns an object with a 'pokemons' array
-      });
-  }, []);
-
-  // Corrected return statement
-  return typeof pokemon === "undefined" || pokemon.length === 0 ? ( // Check if 'pokemon' is undefined or empty
+const Home = ({ onPokemonClick, pokemon }) => {
+  return typeof pokemon === "undefined" ? ( // Check if 'pokemon' is undefined or empty
     <p>Loading...</p>
   ) : (
     pokemon.map(

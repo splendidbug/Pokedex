@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./Details.css";
 
 const Details = ({ pokemonUrl }) => {
   const [pokemonDetails, setPokemonDetails] = useState([]);
@@ -9,15 +10,21 @@ const Details = ({ pokemonUrl }) => {
     fetch(`/api/details?id=${pokemonId}`)
       .then((response) => response.json())
       .then((data) => {
-        setPokemonDetails(data.stats); // Assuming the API returns an object with a 'pokemons' array
-        console.log(data.weight);
+        setPokemonDetails(data); // Assuming the API returns an object with a 'pokemons' array
+        console.log(data);
       });
   }, []);
 
-  return (
-    <div>
-      <h1>Pokémon Details</h1>
-      <p>URL: {pokemonUrl}</p>
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  return pokemonDetails.name === undefined ? (
+    <h1>Loading...</h1>
+  ) : (
+    <div class="details">
+      <h1>{capitalizeFirstLetter(pokemonDetails.name)}</h1>
+      <img src={pokemonDetails.img_front_default}></img>
     </div>
   );
 };
