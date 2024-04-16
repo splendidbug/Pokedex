@@ -1,0 +1,18 @@
+runtime: nodejs18  # specify your Node.js version here
+
+env: standard
+instance_class: F1
+
+handlers:
+  - url: /api/.*
+    script: auto
+    secure: always
+
+  - url: /(.*\.(json|ico|js|css))$
+    static_files: client/build/\1
+    upload: client/build/.*\.(json|ico|js|css)$
+
+  - url: /.*
+    static_files: client/build/index.html
+    upload: client/build/index.html
+    secure: always
