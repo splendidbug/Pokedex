@@ -29,6 +29,7 @@ const App = () => {
         .then((response) => response.json())
         .then((data) => {
           setPokemons(data.pokemons);
+          setFilteredPokemons(data.pokemons);
         })
         .catch((error) => {
           console.error("Failed to fetch data:", error);
@@ -61,13 +62,13 @@ const App = () => {
   };
 
   const loadMorePokemons = () => {
-    if (pokemons.length > 0) {
-      console.log("before loading", pokemons.length);
+    if (filteredPokemons.length > 0) {
+      console.log("before loading", filteredPokemons.length);
       console.log("loading more pokemons");
-      const nextItems = pokemons.slice(pokemonIndex.current, pokemonIndex.current + 20);
+      const nextItems = filteredPokemons.slice(pokemonIndex.current, pokemonIndex.current + 20);
       setScrolledPokemons((prev) => [...prev, ...nextItems]);
       pokemonIndex.current += 20;
-      console.log("after loading", pokemons.length);
+      console.log("after loading", filteredPokemons.length);
     }
     console.log("no");
   };
@@ -77,7 +78,10 @@ const App = () => {
   const handleSearch = (searchText) => {
     setSearchedText(searchText);
     const filtered = pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(searchText.toLowerCase()));
+    pokemonIndex.current = 0;
     setFilteredPokemons(filtered);
+    setScrolledPokemons([]);
+    loadMorePokemons();
   };
 
   const { isAuthenticated, isLoading } = useAuth0();
