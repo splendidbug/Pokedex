@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import HomePage from "../HomePage/Home";
 import Details from "../PokeDetails/Details";
@@ -20,19 +20,62 @@ const App = () => {
     setSelectedUrl("");
     setCurrentView("home");
   };
-
-  const [pokemons, setPokemon] = useState([]); // Initialize as an empty array
+  const pokemonIndex = useRef(0);
+  const [scrolledPokemons, setScrolledPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
   useEffect(() => {
-    fetch("/api/getpokemons")
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemon(data.pokemons);
-        setFilteredPokemons(data.pokemons);
-      });
-  }, []);
+    if (pokemons.length === 0) {
+      fetch(`/api/getpokemons?offset=0&limit=2000`)
+        .then((response) => response.json())
+        .then((data) => {
+          setPokemons(data.pokemons);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch data:", error);
+        });
+    }
 
+    // Set up scroll listener
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [pokemons]);
+
+  useEffect(() => {
+    if (pokemons.length > 0) {
+      console.log("Loading initial batch of displayed pokemons");
+      loadMorePokemons(); // Load initial batch to display
+    }
+  }, [pokemons]); // This useEffect depends on `pokemons`
+
+  const handleScroll = () => {
+    // Adding a threshold of 100 pixels to ensure the event triggers before exactly reaching the bottom
+    if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - 100) {
+      return;
+    }
+    console.log(pokemons.length);
+    console.log("Bottom reached, loading more items");
+
+    loadMorePokemons();
+  };
+
+  const loadMorePokemons = () => {
+    if (pokemons.length > 0) {
+      console.log("before loading", pokemons.length);
+      console.log("loading more pokemons");
+      const nextItems = pokemons.slice(pokemonIndex.current, pokemonIndex.current + 20);
+      setScrolledPokemons((prev) => [...prev, ...nextItems]);
+      pokemonIndex.current += 20;
+      console.log("after loading", pokemons.length);
+    }
+    console.log("no");
+  };
+
+  const [searchedText, setSearchedText] = useState("");
   const [filteredPokemons, setFilteredPokemons] = useState([]);
   const handleSearch = (searchText) => {
+    setSearchedText(searchText);
     const filtered = pokemons.filter((pokemon) => pokemon.name.toLowerCase().includes(searchText.toLowerCase()));
     setFilteredPokemons(filtered);
   };
@@ -46,7 +89,9 @@ const App = () => {
           {currentView === "home" ? (
             <div>
               <SearchBar onSearch={handleSearch} />
-              <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />
+              <HomePage onPokemonClick={handlePokemonClick} pokemon={scrolledPokemons} />
+              {/* {searchedText === "" ? <HomePage onPokemonClick={handlePokemonClick} pokemon={pokemons} /> : <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />} */}
+
               <LogoutButton />
             </div>
           ) : (
