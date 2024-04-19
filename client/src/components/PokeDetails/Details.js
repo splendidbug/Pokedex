@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import AnimatedLinearProgress from "../Common/LinearProgressBar";
+// import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
 
 const Details = ({ pokemonUrl }) => {
   const [pokemonDetails, setPokemonDetails] = useState([]);
@@ -77,46 +78,49 @@ const Details = ({ pokemonUrl }) => {
   return pokemonDetails.name === undefined ? (
     <h1>Loading...</h1>
   ) : (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: 10 }}>
-      <Card sx={{ maxWidth: 400 }}>
-        {/* <p>{pokemon.url.split("/")[pokemon.url.split("/").length - 2]}</p> */}
-        <CardMedia component="img" alt="Pokemon" image={pokemonDetails.img_front_default} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {capitalizeFirstLetter(pokemonDetails.name)}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {"" + pokemonDescription[0]?.flavor_text + "\n" + pokemonDescription[1]?.flavor_text}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Height: {pokemonDetails.height}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Weight: {pokemonDetails.weight}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Type:
-          </Typography>
-          {pokemonDetails?.types.map((type, index) => (
-            <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: typeColors[type.type.name]?.text || "#fefae0" }}>
-              {type.type.name}
-            </Box>
-          ))}
-          <Typography variant="body2" color="text.secondary">
-            Stats:
-          </Typography>
-          {/* {console.log(pokemonDetails?.stats)} */}
-          {pokemonDetails?.stats.map((stat, index) => (
-            <Box key={index} display="flex" alignItems="center" gap={2} marginTop={2} width="100%">
-              <Typography variant="body2" color="text.secondary" component="span" sx={{ minWidth: "max-content" }}>
-                {stat.stat.name.toUpperCase()}:
-              </Typography>
-              <AnimatedLinearProgress targetValue={stat.base_stat} sx={{ flexGrow: 1, marginTop: 2, marginLeft: 1, height: "50px" }} />
-            </Box>
-          ))}
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 10 }}>
+        <Card sx={{ maxWidth: 400 }}>
+          {/* <p>{pokemon.url.split("/")[pokemon.url.split("/").length - 2]}</p> */}
+          <CardMedia component="img" alt="Pokemon" image={pokemonDetails.img_front_default} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {capitalizeFirstLetter(pokemonDetails.name)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {"" + pokemonDescription[0]?.flavor_text + "\n" + pokemonDescription[1]?.flavor_text}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Height: {pokemonDetails.height}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Weight: {pokemonDetails.weight}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Type:
+            </Typography>
+            {pokemonDetails?.types.map((type, index) => (
+              <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: typeColors[type.type.name]?.text || "#fefae0" }}>
+                {type.type.name}
+              </Box>
+            ))}
+            <Typography variant="body2" color="text.secondary">
+              Stats:
+            </Typography>
+            {/* {console.log(pokemonDetails?.stats)} */}
+            {pokemonDetails?.stats.map((stat, index) => (
+              <Box key={index} display="flex" alignItems="center" gap={2} marginTop={2} width="100%">
+                <Typography variant="body2" color="text.secondary" component="span" sx={{ minWidth: "max-content" }}>
+                  {stat.stat.name.toUpperCase()}:
+                </Typography>
+                <AnimatedLinearProgress targetValue={stat.base_stat} sx={{ flexGrow: 1, marginTop: 2, marginLeft: 1, height: "50px" }} />
+              </Box>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+      {/* <PokemonEvolution /> */}
+    </>
   );
 };
 

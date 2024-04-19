@@ -31,6 +31,16 @@ app.get("/api/details", (request, response) => {
     .catch((err) => console.log(err));
 });
 
+app.get("/api/description", (request, response) => {
+  const url = `https://pokeapi.co/api/v2/pokemon-species/${request.query.id}/`;
+  axios
+    .get(url)
+    .then((res) => {
+      response.json({ description: res.data.flavor_text_entries.filter((entry) => entry.language.name === "en") });
+    })
+    .catch((err) => console.log(err));
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
