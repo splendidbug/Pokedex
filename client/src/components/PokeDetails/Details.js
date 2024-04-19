@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import AnimatedLinearProgress from "../Common/LinearProgressBar";
-// import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
+import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
 
 const Details = ({ pokemonUrl }) => {
   const [pokemonDetails, setPokemonDetails] = useState([]);
@@ -119,7 +119,7 @@ const Details = ({ pokemonUrl }) => {
           </CardContent>
         </Card>
       </div>
-      {/* <PokemonEvolution /> */}
+      <PokemonEvolution pokemonName={pokemonDetails.name} />
     </>
   );
 };
