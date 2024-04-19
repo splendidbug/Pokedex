@@ -50,27 +50,28 @@ const App = () => {
     }
   }, [pokemons]); // This useEffect depends on `pokemons`
 
+  const currentViewRef = useRef(currentView);
+  currentViewRef.current = currentView; // Update ref on each render
+
   const handleScroll = () => {
     // Adding a threshold of 100 pixels to ensure the event triggers before exactly reaching the bottom
-    if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - 100) {
+    if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - 100 || currentViewRef.current === "details") {
       return;
     }
-    console.log(pokemons.length);
+    console.log(currentView);
     console.log("Bottom reached, loading more items");
 
     loadMorePokemons();
   };
 
   const loadMorePokemons = () => {
+    console.log(currentViewRef.current);
     if (filteredPokemons.length > 0) {
-      console.log("before loading", filteredPokemons.length);
       console.log("loading more pokemons");
       const nextItems = filteredPokemons.slice(pokemonIndex.current, pokemonIndex.current + 20);
       setScrolledPokemons((prev) => [...prev, ...nextItems]);
       pokemonIndex.current += 20;
-      console.log("after loading", filteredPokemons.length);
     }
-    console.log("no");
   };
 
   const [searchedText, setSearchedText] = useState("");
@@ -83,7 +84,6 @@ const App = () => {
     setScrolledPokemons([]);
     loadMorePokemons();
   };
-
   const { isAuthenticated, isLoading } = useAuth0();
 
   return (
@@ -100,6 +100,7 @@ const App = () => {
             </div>
           ) : (
             <div>
+              {/* {console.log(currentView)} */}
               <BackButton onBackButtonClick={handleBackButtonClick} />
               <Details pokemonUrl={selectedUrl} />
               <LogoutButton />
