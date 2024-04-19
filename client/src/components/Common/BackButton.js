@@ -1,7 +1,11 @@
 import React from "react";
 
 function BackButton({ onBackButtonClick }) {
-  return <div onClick={() => onBackButtonClick()}>BackButton</div>;
+  return (
+    <button className="LogOut" onClick={() => onBackButtonClick()}>
+      Back
+    </button>
+  );
 }
 
 export default BackButton;

@@ -1,0 +1,12 @@
+.SearchBarContainer {
+  /* display: flex; */
+  justify-content: center;
+  width: 30%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.ReactSearchBox {
+  width: 100%;
+  border-radius: 50%;
+}

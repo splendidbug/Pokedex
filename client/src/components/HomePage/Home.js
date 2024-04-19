@@ -70,6 +70,10 @@ const Home = ({ onPokemonClick, pokemon }) => {
     fairy: { background: "#ee99ee" },
   };
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return pokemonDescription === undefined || pokemonDescription.length == 0 ? (
     <p>Loading...</p>
   ) : (
@@ -110,7 +114,7 @@ const Home = ({ onPokemonClick, pokemon }) => {
               <CardMedia component="img" alt="Pokemon" image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}.png`} />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {pokemon.name}
+                  {capitalizeFirstLetter(pokemon?.name)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {pokemonDescription[i]?.description?.[0]?.flavor_text}

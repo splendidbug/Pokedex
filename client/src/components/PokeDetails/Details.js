@@ -86,7 +86,7 @@ const Details = ({ pokemonUrl }) => {
           <CardMedia component="img" alt="Pokemon" image={pokemonDetails.img_front_default} />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              {capitalizeFirstLetter(pokemonDetails.name)}
+              {capitalizeFirstLetter(pokemonDetails?.name)}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {"" + pokemonDescription[0]?.flavor_text + ". " + pokemonDescription[1]?.flavor_text}

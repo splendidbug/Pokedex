@@ -91,20 +91,40 @@ const App = () => {
       {isAuthenticated ? (
         <>
           {currentView === "home" ? (
-            <div>
-              <SearchBar onSearch={handleSearch} />
-              <HomePage onPokemonClick={handlePokemonClick} pokemon={scrolledPokemons} />
-              {/* {searchedText === "" ? <HomePage onPokemonClick={handlePokemonClick} pokemon={pokemons} /> : <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />} */}
+            <>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ flexGrow: 1, textAlign: "center" }}>
+                  <p style={{ margin: 0 }}>Pokedex</p>
+                </div>
+                <LogoutButton style={{ marginLeft: "auto" }} />
+              </div>
 
-              <LogoutButton />
-            </div>
+              <div>
+                <SearchBar onSearch={handleSearch} />
+                <HomePage onPokemonClick={handlePokemonClick} pokemon={scrolledPokemons} />
+                {/* {searchedText === "" ? <HomePage onPokemonClick={handlePokemonClick} pokemon={pokemons} /> : <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />} */}
+              </div>
+            </>
           ) : (
-            <div>
-              {/* {console.log(currentView)} */}
-              <BackButton onBackButtonClick={handleBackButtonClick} />
-              <Details pokemonUrl={selectedUrl} />
-              <LogoutButton />
-            </div>
+            <>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <BackButton onBackButtonClick={handleBackButtonClick} />
+                <div style={{ flexGrow: 1, textAlign: "center" }}>
+                  <p style={{ margin: 0 }}>Pokedex</p>
+                </div>
+                <LogoutButton style={{ marginLeft: "auto" }} />
+              </div>
+              {/* <div style={{ display: "flex" }}>
+                <BackButton onBackButtonClick={handleBackButtonClick} />
+                <p>Pokedex</p>
+                <LogoutButton />
+              </div> */}
+              <div>
+                {/* {console.log(currentView)} */}
+                <Details pokemonUrl={selectedUrl} />
+                <LogoutButton />
+              </div>
+            </>
           )}
         </>
       ) : (
