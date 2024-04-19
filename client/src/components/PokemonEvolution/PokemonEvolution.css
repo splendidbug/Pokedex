@@ -1,0 +1,18 @@
+.title {
+  font-size: 30px;
+  margin-top: 50px;
+}
+
+.evolutionCard {
+  width: 250px;
+  height: 400px;
+}
+.evolutionImage {
+  width: 250px;
+  height: 250px;
+}
+
+.name {
+  display: "block";
+  font-size: 20px;
+}

@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import AnimatedLinearProgress from "../Common/LinearProgressBar";
 import PokemonEvolution from "../PokemonEvolution/PokemonEvolution";
+import "./Details.css";
 
 const Details = ({ pokemonUrl }) => {
   const [pokemonDetails, setPokemonDetails] = useState([]);
@@ -56,23 +57,23 @@ const Details = ({ pokemonUrl }) => {
   }
 
   const typeColors = {
-    grass: { background: "#77cc55", text: "white" },
-    poison: { background: "#aa5599", text: "white" },
-    ice: { background: "#66ccff", text: "white" },
-    fire: { background: "#ff4422", text: "white" },
-    electric: { background: "#ffcc33", text: "white" },
-    water: { background: "#3399ff", text: "white" },
-    fighting: { background: "#bb5544", text: "white" },
-    ground: { background: "#ddbb55", text: "white" },
-    flying: { background: "#8899ff", text: "white" },
-    psychic: { background: "#ff5599", text: "white" },
-    bug: { background: "#aabb22", text: "white" },
-    rock: { background: "#bbaa66", text: "white" },
-    ghost: { background: "#6666bb", text: "white" },
-    dragon: { background: "#7766ee", text: "white" },
-    dark: { background: "#775544", text: "white" },
-    steel: { background: "#aaaabb", text: "white" },
-    fairy: { background: "#ee99ee", text: "white" },
+    grass: { background: "#77cc55" },
+    poison: { background: "#aa5599" },
+    ice: { background: "#66ccff" },
+    fire: { background: "#ff4422" },
+    electric: { background: "#ffcc33" },
+    water: { background: "#3399ff" },
+    fighting: { background: "#bb5544" },
+    ground: { background: "#ddbb55" },
+    flying: { background: "#8899ff" },
+    psychic: { background: "#ff5599" },
+    bug: { background: "#aabb22" },
+    rock: { background: "#bbaa66" },
+    ghost: { background: "#6666bb" },
+    dragon: { background: "#7766ee" },
+    dark: { background: "#775544" },
+    steel: { background: "#aaaabb" },
+    fairy: { background: "#ee99ee" },
   };
 
   return pokemonDetails.name === undefined ? (
@@ -88,25 +89,16 @@ const Details = ({ pokemonUrl }) => {
               {capitalizeFirstLetter(pokemonDetails.name)}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {"" + pokemonDescription[0]?.flavor_text + "\n" + pokemonDescription[1]?.flavor_text}
+              {"" + pokemonDescription[0]?.flavor_text + ". " + pokemonDescription[1]?.flavor_text}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Height: {pokemonDetails.height}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Weight: {pokemonDetails.weight}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Type:
-            </Typography>
+            <p className="heightWeight">Height: {pokemonDetails.height}</p>
+            <p className="heightWeight">Weight: {pokemonDetails.weight}</p>
             {pokemonDetails?.types.map((type, index) => (
-              <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: typeColors[type.type.name]?.text || "#fefae0" }}>
+              <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white" }}>
                 {type.type.name}
               </Box>
             ))}
-            <Typography variant="body2" color="text.secondary">
-              Stats:
-            </Typography>
+            <p className="statsHeading">Stats:</p>
             {/* {console.log(pokemonDetails?.stats)} */}
             {pokemonDetails?.stats.map((stat, index) => (
               <Box key={index} display="flex" alignItems="center" gap={2} marginTop={2} width="100%">
