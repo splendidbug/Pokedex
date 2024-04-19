@@ -80,8 +80,8 @@ const Details = ({ pokemonUrl }) => {
     <h1>Loading...</h1>
   ) : (
     <>
-      <div style={{ display: "flex", justifyContent: "center", marginTop: 10 }}>
-        <Card sx={{ maxWidth: 400 }}>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+        <Card sx={{ border: "none", boxShadow: "none", maxWidth: 400, marginRight: "150px" }}>
           {/* <p>{pokemon.url.split("/")[pokemon.url.split("/").length - 2]}</p> */}
           <CardMedia component="img" alt="Pokemon" image={pokemonDetails.img_front_default} />
           <CardContent>
@@ -91,13 +91,32 @@ const Details = ({ pokemonUrl }) => {
             <Typography variant="body2" color="text.secondary">
               {"" + pokemonDescription[0]?.flavor_text + ". " + pokemonDescription[1]?.flavor_text}
             </Typography>
-            <p className="heightWeight">Height: {pokemonDetails.height}</p>
-            <p className="heightWeight">Weight: {pokemonDetails.weight}</p>
             {pokemonDetails?.types.map((type, index) => (
-              <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white" }}>
+              <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white", borderRadius: "7px" }}>
                 {type.type.name}
               </Box>
             ))}
+          </CardContent>
+        </Card>
+        <Card sx={{ width: 500 }}>
+          <CardContent>
+            <div className="hw" style={{ display: "flex", alignItems: "center" }}>
+              <div class="text">
+                <p className="heightWeight">Height: {pokemonDetails.height}</p>
+                <p className="heightWeight">Weight: {pokemonDetails.weight}</p>
+              </div>
+              <div className="topMoves">
+                <p>Top Moves:</p>
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "flex-start" }}>
+                  {pokemonDetails?.moves.slice(0, Math.min(6, pokemonDetails.moves.length)).map((move, index) => (
+                    <Box key={index} height={30} my={1} mx={0.5} display="flex" alignItems="center" gap={1} sx={{ border: "1px solid grey", bgcolor: "silver", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "black", borderRadius: "15px", width: "20%" }}>
+                      {move.move.name}
+                    </Box>
+                  ))}
+                </div>
+              </div>
+            </div>
+
             <p className="statsHeading">Stats:</p>
             {/* {console.log(pokemonDetails?.stats)} */}
             {pokemonDetails?.stats.map((stat, index) => (

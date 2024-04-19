@@ -13,6 +13,7 @@ const SearchBar = ({ onSearch }) => {
       }}
       callback={(record) => console.log(record)}
       iconBoxSize="48px"
+      style={{}}
     />
   );
 };

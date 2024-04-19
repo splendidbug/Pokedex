@@ -50,6 +50,26 @@ const Home = ({ onPokemonClick, pokemon }) => {
     fetchPokemonDescription().catch(console.error);
   }, [pokemon]); // Dependency array includes `pokemon` to refetch when it changes
 
+  const typeColors = {
+    grass: { background: "#77cc55" },
+    poison: { background: "#aa5599" },
+    ice: { background: "#66ccff" },
+    fire: { background: "#ff4422" },
+    electric: { background: "#ffcc33" },
+    water: { background: "#3399ff" },
+    fighting: { background: "#bb5544" },
+    ground: { background: "#ddbb55" },
+    flying: { background: "#8899ff" },
+    psychic: { background: "#ff5599" },
+    bug: { background: "#aabb22" },
+    rock: { background: "#bbaa66" },
+    ghost: { background: "#6666bb" },
+    dragon: { background: "#7766ee" },
+    dark: { background: "#775544" },
+    steel: { background: "#aaaabb" },
+    fairy: { background: "#ee99ee" },
+  };
+
   return pokemonDescription === undefined || pokemonDescription.length == 0 ? (
     <p>Loading...</p>
   ) : (
@@ -75,7 +95,17 @@ const Home = ({ onPokemonClick, pokemon }) => {
             }}
           >
             {/* xs=12 makes it full width on extra small devices, and md=3 makes it use 4 columns out of 12 on medium devices and larger */}
-            <Card sx={{ maxWidth: 300 }} onClick={() => onPokemonClick(pokemon.url)}>
+            <Card
+              sx={{
+                maxWidth: 300,
+                transition: "0.3s",
+                "&:hover": {
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.2)", // Enhanced shadow on hover
+                  transform: "scale(1.03)", // Slightly scale up the Card
+                },
+              }}
+              onClick={() => onPokemonClick(pokemon.url)}
+            >
               {/* <p>{pokemon.url.split("/")[pokemon.url.split("/").length - 2]}</p> */}
               <CardMedia component="img" alt="Pokemon" image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}.png`} />
               <CardContent>
@@ -87,7 +117,7 @@ const Home = ({ onPokemonClick, pokemon }) => {
                 </Typography>
               </CardContent>
               {pokemonDetails[i]?.types.map((type, index) => (
-                <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "#fefae0" }}>
+                <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white", borderRadius: "7px" }}>
                   {type.type.name}
                 </Box>
               ))}

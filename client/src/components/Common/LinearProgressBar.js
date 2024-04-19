@@ -36,7 +36,7 @@ function AnimatedLinearProgress({ targetValue }) {
         value={progress}
         sx={{
           "& .MuiLinearProgress-bar": {
-            backgroundColor: getColor(progress),
+            // backgroundColor: getColor(progress),
             transition: "background-color 0.5s ease", // Apply transition to background-color
           },
         }}
