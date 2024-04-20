@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactSearchBox from "react-search-box";
 import "./SearchBar.css";
+import SearchIcon from "@mui/icons-material/Search";
 const SearchBar = ({ onSearch }) => {
   const [value, setValue] = useState("");
   return (
@@ -8,7 +9,7 @@ const SearchBar = ({ onSearch }) => {
       <ReactSearchBox
         className="ReactSearchBox"
         placeholder="Search for a pokemon"
-        leftIcon={<>🎨</>}
+        leftIcon={<SearchIcon />}
         value={value}
         onChange={(newValue) => {
           setValue(newValue);

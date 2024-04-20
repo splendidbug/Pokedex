@@ -7,6 +7,7 @@ import SearchBar from "../Common/SearchBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "../LoginButton"; // Assuming you have this component
 import LogoutButton from "../LogoutButton"; // Assuming you have this component
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const App = () => {
   const [currentView, setCurrentView] = useState("home");
@@ -92,14 +93,14 @@ const App = () => {
         <>
           {currentView === "home" ? (
             <>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "10px" }}>
                 <div style={{ flexGrow: 1, textAlign: "center" }}>
-                  <p style={{ margin: 0 }}>Pokedex</p>
+                  <p style={{ margin: 0, fontSize: "25px" }}>Pokédex</p>
                 </div>
                 <LogoutButton style={{ marginLeft: "auto" }} />
               </div>
 
-              <div>
+              <div style={{ marginTop: "15px" }}>
                 <SearchBar onSearch={handleSearch} />
                 <HomePage onPokemonClick={handlePokemonClick} pokemon={scrolledPokemons} />
                 {/* {searchedText === "" ? <HomePage onPokemonClick={handlePokemonClick} pokemon={pokemons} /> : <HomePage onPokemonClick={handlePokemonClick} pokemon={filteredPokemons} />} */}
@@ -107,28 +108,31 @@ const App = () => {
             </>
           ) : (
             <>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "10px" }}>
                 <BackButton onBackButtonClick={handleBackButtonClick} />
                 <div style={{ flexGrow: 1, textAlign: "center" }}>
-                  <p style={{ margin: 0 }}>Pokedex</p>
+                  <p style={{ margin: 0, fontSize: "25px" }} onClick={() => setCurrentView("home")}>
+                    Pokédex
+                  </p>
                 </div>
                 <LogoutButton style={{ marginLeft: "auto" }} />
               </div>
-              {/* <div style={{ display: "flex" }}>
-                <BackButton onBackButtonClick={handleBackButtonClick} />
-                <p>Pokedex</p>
-                <LogoutButton />
-              </div> */}
-              <div>
-                {/* {console.log(currentView)} */}
-                <Details pokemonUrl={selectedUrl} />
-                <LogoutButton />
-              </div>
+              <Details pokemonUrl={selectedUrl} />
             </>
           )}
         </>
       ) : (
-        <LoginButton />
+        <>
+          <div className="topText">
+            <p style={{ margin: 0, fontSize: "35px" }}>
+              I <FavoriteIcon sx={{ fontSize: 35, position: "relative", top: "4px" }} /> Pokemon
+            </p>
+          </div>
+
+          <div className="centerContent">
+            <LoginButton />
+          </div>
+        </>
       )}
     </div>
   );

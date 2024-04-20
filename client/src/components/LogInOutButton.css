@@ -1,5 +1,13 @@
 .LogOut {
-  height: 50px;
+  margin: 0px 20px 0px 0px;
+}
+.backButton {
+  /* height: 50px;
+  width: 50px; */
+  margin: 0px 0px 0px 20px;
+}
+
+.LogIn {
   width: 70px;
-  margin: 10px 10px 10px 0px;
+  height: 70px;
 }

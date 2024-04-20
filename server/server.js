@@ -5,6 +5,7 @@ const https = require("https");
 const cors = require("cors");
 const path = require("path");
 app.use(cors());
+const { PythonShell } = require("python-shell");
 
 const PORT = process.env.PORT || 8080;
 
@@ -41,19 +42,6 @@ app.get("/api/description", (request, response) => {
     .catch((err) => console.log(err));
 });
 
-// app.get("/api/evolution", (request, response) => {
-//   const url = `https://pokeapi.co/api/v2/pokemon-species/${request.query.name}`;
-//   axios.get(url).then((res) => {
-//     const evolution_url = res.data.evolution_chain.url;
-//     axios
-//       .get(evolution_url)
-//       .then((res) => {
-//         response.json({ first: res.data.chain.species.url, second: res.data.chain.evolves_to[0].species.url, third: res.data.chain.evolves_to[0].evolves_to[0].species.url });
-//       })
-//       .catch((err) => console.log(err));
-//   });
-// });
-
 app.get("/api/evolution", async (request, response) => {
   try {
     const url = `https://pokeapi.co/api/v2/pokemon-species/${request.query.name}`;
@@ -77,6 +65,38 @@ app.get("/api/evolution", async (request, response) => {
   } catch (error) {
     console.error("Error fetching evolution data:", error.message);
     response.status(500).json({ error: "Failed to retrieve evolution data" });
+  }
+});
+
+app.get("/api/get-color", async (request, response) => {
+  try {
+    const url = `https://pokeapi.co/api/v2/pokemon/${request.query.id}/`;
+    const res = await axios.get(url);
+    const img = res.data.sprites.other.dream_world.front_default;
+    console.log(img);
+    const spawn = require("child_process").spawn;
+    const pythonProcess = spawn("python", ["./server/prominent_color.py", img]);
+    pythonProcess.stdout.on("data", (data) => {
+      console.log(data.toString());
+      response.json({ color: data.toString() });
+    });
+    // let options = {
+    //   mode: "text",
+    //   pythonOptions: ["-u"], // unbuffered, uninterrupted output
+    //   scriptPath: "C:\\Users\\shrey\\Desktop\\stuff\\assignments\\grad\\projects\\pokedex\\server", // path to your Python script
+    //   args: [img], // an argument which is the URL to the SVG file
+    // };
+    // console.log("Options set:", options);
+    // PythonShell.run("prominent_color.py", options, function (err, result) {
+    //   console.log("inside shell");
+    //   if (err) throw err;
+    //   console.log(result);
+    // });
+
+    // response.json("#ffffff");
+  } catch (error) {
+    console.error("Error fetching evolution data:", error.message);
+    response.status(500).json({ error: "Failed to retrieve color data" });
   }
 });
 

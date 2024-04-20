@@ -77,12 +77,6 @@ const Home = ({ onPokemonClick, pokemon }) => {
   return pokemonDescription === undefined || pokemonDescription.length == 0 ? (
     <p>Loading...</p>
   ) : (
-    // pokemon.map((pokemon, i) => (
-    //   <p key={i} onClick={() => onPokemonClick(pokemon.url)}>
-    //     {pokemon.name}
-    //   </p>
-    // ))
-
     <div style={{ display: "flex", justifyContent: "center", marginTop: 10 }}>
       <Grid className="grid1" container style={{ width: "80%", margin: 0, padding: 0, rowGap: "26px" }}>
         {/* spacing={2} adds some space between grid items */}
@@ -101,8 +95,10 @@ const Home = ({ onPokemonClick, pokemon }) => {
             {/* xs=12 makes it full width on extra small devices, and md=3 makes it use 4 columns out of 12 on medium devices and larger */}
             <Card
               sx={{
-                maxWidth: 300,
+                maxWidth: 250,
                 transition: "0.3s",
+                paddingBottom: "10px",
+
                 "&:hover": {
                   boxShadow: "0 4px 8px rgba(0,0,0,0.2)", // Enhanced shadow on hover
                   transform: "scale(1.03)", // Slightly scale up the Card
@@ -111,17 +107,26 @@ const Home = ({ onPokemonClick, pokemon }) => {
               onClick={() => onPokemonClick(pokemon.url)}
             >
               {/* <p>{pokemon.url.split("/")[pokemon.url.split("/").length - 2]}</p> */}
-              <CardMedia component="img" alt="Pokemon" image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split("/")[pokemon.url.split("/").length - 2]}.png`} />
+              <CardMedia
+                component="img"
+                alt="Pokemon"
+                image={pokemonDetails[i]?.img_front_default}
+                sx={{
+                  height: 125, // Fixing the height to match max dimensions
+                  width: "auto", // Fixing the width to match max dimensions
+                  objectFit: "contain", // Ensures the image is scaled properly within the dimensions
+                  margin: "auto", // This will center the image in the available space
+                  display: "block", // Makes sure the image is treated as a block item to accept margin auto
+                }}
+              />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h6" component="div">
                   {capitalizeFirstLetter(pokemon?.name)}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {pokemonDescription[i]?.description?.[0]?.flavor_text}
-                </Typography>
+                <p style={{ fontSize: "13px" }}>{pokemonDescription[i]?.description?.[0]?.flavor_text}</p>
               </CardContent>
               {pokemonDetails[i]?.types.map((type, index) => (
-                <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white", borderRadius: "7px" }}>
+                <Box key={index} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ fontSize: "13px", border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white", borderRadius: "7px" }}>
                   {type.type.name}
                 </Box>
               ))}

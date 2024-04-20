@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import "./PokemonEvolution.css";
 import pokeArrow from "../poke_arrow.svg";
 
-const PokemonEvolution = ({ pokemonName }) => {
+const PokemonEvolution = ({ pokemonName, color }) => {
   const [pokemonEvolution, setPokemonEvolution] = useState();
   useEffect(() => {
     fetch(`/api/evolution?name=${pokemonName}`)
@@ -41,13 +41,13 @@ const PokemonEvolution = ({ pokemonName }) => {
     <>
       <p className="title">Evolution</p>
       <Grid container spacing={2} justifyContent="center">
-        {pokemonEvolution.map((pokemon, index) => (
+        {pokemonEvolution?.map((pokemon, index) => (
           <>
             <Grid item xs={6} sm={4} md={2} key={"pokemon-" + index}>
-              <Card className="evolutionCard">
-                <CardMedia component="img" alt="Pokemon" image={pokemon.img_front_default} className="evolutionImage" />
+              <Card className="evolutionCard" sx={{ height: 320, boxShadow: "none" /*backgroundColor: prominentColor*/ }}>
+                <CardMedia component="img" alt="Pokemon" image={pokemon.img_front_default} className="evolutionImage" sx={{ width: "auto", height: 190, margin: "auto", justifyContent: "center", display: "block" }} />
                 <p className="name">{pokemon.name}</p>
-                {pokemon.types.map((type, typeIndex) => (
+                {pokemon?.types?.map((type, typeIndex) => (
                   <Box key={"type-" + typeIndex} height={30} my={4} display="inline-flex" alignItems="center" gap={2} sx={{ border: "1px solid grey", bgcolor: typeColors[type.type.name.toLowerCase()]?.background || "#fb8500", paddingX: 1, whiteSpace: "nowrap", margin: 0.5, color: "white", borderRadius: "7px" }}>
                     {type.type.name}
                   </Box>
@@ -56,7 +56,7 @@ const PokemonEvolution = ({ pokemonName }) => {
             </Grid>
 
             {index < 2 && ( // Conditional rendering based on index
-              <Card className="evolutionCard" key={"arrow-" + index} sx={{ maxWidth: 140, display: "flex", justifyContent: "center", alignItems: "center", border: "none", boxShadow: "none" }}>
+              <Card className="evolutionCard" key={"arrow-" + index} sx={{ maxWidth: 140, display: "flex", justifyContent: "center", alignItems: "center", border: "none", boxShadow: "none" /*backgroundColor: prominentColor*/ }}>
                 <CardMedia component="img" alt="Pokemon" image={pokeArrow} className="evolutionImage" sx={{ maxWidth: 100, maxHeight: 100 }} />
               </Card>
             )}
